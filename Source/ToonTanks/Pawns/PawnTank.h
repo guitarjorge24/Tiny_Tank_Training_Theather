@@ -31,7 +31,9 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess = "true"))
 	class UCameraComponent* CameraComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tank Movement", meta=(AllowPrivateAccess = "true"))
 	float MoveSpeed = 100.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tank Movement", meta=(AllowPrivateAccess = "true"))
 	float RotateSpeed = 100.f;
 	
 	FVector TranslationAmountPerFrame;
