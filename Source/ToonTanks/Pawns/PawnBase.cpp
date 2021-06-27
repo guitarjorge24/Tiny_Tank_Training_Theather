@@ -2,6 +2,7 @@
 
 #include "PawnBase.h"
 #include "Components/CapsuleComponent.h"
+#include "ToonTanks/Actors/ProjectileBase.h"
 
 // Sets default values
 APawnBase::APawnBase()
@@ -44,6 +45,17 @@ void APawnBase::Fire()
 	// Then spawn Projectile class at Location firing towards Rotation
 	// #ToDoJ: The rotation we need is probably not the local rotation since that one will be 0 since the
 	// ProjectileSpawnPoint is attached to the TurretMesh. We need the world rotation.
+
+	if(ProjectileClass)
+	{
+		FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+		FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+		AProjectileBase* TempProjectile = GetWorld()->SpawnActor<AProjectileBase>(
+			ProjectileClass, SpawnLocation, SpawnRotation);
+
+		TempProjectile->SetOwner(this);
+	}
+	
 	UE_LOG(LogTemp, Warning, TEXT("Fire Condition Success"))
 }
 
