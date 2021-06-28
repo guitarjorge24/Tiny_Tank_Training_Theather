@@ -9,6 +9,7 @@
 #include "PawnBase.generated.h"
 
 class AProjectileBase;
+class UStaticMeshComponent;
 
 UCLASS()
 class TOONTANKS_API APawnBase : public APawn

@@ -22,7 +22,7 @@ protected:
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-	UStaticMeshComponent* ProjectileMesh;
+	class UStaticMeshComponent* ProjectileMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 	

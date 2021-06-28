@@ -2,7 +2,8 @@
 
 
 #include "ProjectileBase.h"
-
+// It's good practice to include every .h your cpp needs, even if StaticMeshComponent is included by something else
+#include "Components/StaticMeshComponent.h"  
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 

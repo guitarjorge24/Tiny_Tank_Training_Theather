@@ -1,6 +1,7 @@
 // Copyright of Jorge Luque
 
 #include "PawnBase.h"
+#include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "ToonTanks/Actors/ProjectileBase.h"
 
