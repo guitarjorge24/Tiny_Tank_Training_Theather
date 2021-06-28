@@ -24,6 +24,13 @@ public:
 	void ActorDied(AActor* DeadActor);
 
 protected:
+	/**
+	* @brief The pre-game countdown. Should be set to 1 more second than the number you want the
+	* countdown to start so that  "GO!" counts as one last second.
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Game Loop")
+	int32 StartDelay = 3;
+
 	virtual void BeginPlay() override;
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameStart_BP();
@@ -42,7 +49,4 @@ private:
 	// how the _CPP ones are different from the BP ones which set widget related stuff.
 	void GameStart_CPP();
 	void GameOver_CPP(bool PlayerWon);
-
-
-
 };
