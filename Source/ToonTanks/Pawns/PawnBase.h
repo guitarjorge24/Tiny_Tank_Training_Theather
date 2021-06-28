@@ -18,6 +18,7 @@ class TOONTANKS_API APawnBase : public APawn
 public:
 	// Sets default values for this pawn's properties
 	APawnBase();
+	virtual void HandleDestruction();
 	
 protected:
 	/**
@@ -26,7 +27,6 @@ protected:
  	*/
 	void RotateTurret(FVector LocationToLookAt);
 	void Fire();
-	virtual void HandleDestruction();
 
 private:
 #pragma region Components
