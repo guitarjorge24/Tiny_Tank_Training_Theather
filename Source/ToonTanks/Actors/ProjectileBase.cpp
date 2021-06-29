@@ -1,14 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "ProjectileBase.h"
 // It's good practice to include every .h your cpp needs, even if StaticMeshComponent is included by something else
 #include "Components/StaticMeshComponent.h"  
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
-
-// Sets default values
 AProjectileBase::AProjectileBase()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -25,13 +22,9 @@ AProjectileBase::AProjectileBase()
 	InitialLifeSpan = 3.f;
 }
 
-// Called when the game starts or when spawned
 void AProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	//#ToDoJ: to delete this var after turning off bUseUnity. Do I need to include Components/StaticMeshComponent.h ?
-	FVector Location = ProjectileMesh->GetComponentLocation();
 }
 
 void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
@@ -41,12 +34,13 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 	if (!ProjectileOwner) { return; }
 
 	// "OtherActor != this" in case there's components of the projectile that could overlap with itself.
-	//  Check that OtherActor is not the owner to avoid applying damage to the pawn that spawned the projectile.
+	// Check that OtherActor is not the owner to avoid applying damage to the pawn that spawned the projectile.
 	if (OtherActor && OtherActor != this && OtherActor != ProjectileOwner)
 	{
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, ProjectileOwner->GetInstigatorController(),
 			this, DamageType);
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation());
+		Destroy(); // only destroy if it hits something that isn't the owner or itself.
 	}
 
-	Destroy();
 }

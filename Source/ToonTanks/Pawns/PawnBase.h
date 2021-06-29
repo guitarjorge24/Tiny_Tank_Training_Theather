@@ -11,6 +11,7 @@
 class AProjectileBase;
 class UStaticMeshComponent;
 
+
 UCLASS()
 class TOONTANKS_API APawnBase : public APawn
 {
@@ -27,6 +28,7 @@ protected:
  	* @param LocationToLookAt Could be the player (from the enemy's POV) or the cursor (from player's POV)
  	*/
 	void RotateTurret(FVector LocationToLookAt);
+	/** @brief bound to the "Fire" input action. Spawns projectiles. */
 	void Fire();
 
 private:
@@ -39,8 +41,13 @@ private:
 	UStaticMeshComponent* TurretMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USceneComponent* ProjectileSpawnPoint;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
+	class UHealthComponent* HealthComponent; 
 #pragma endregion
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Projectile Type", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AProjectileBase> ProjectileClass;
+	UPROPERTY(EditAnywhere, Category="Effects")
+	UParticleSystem* DeathParticle;
+
 };

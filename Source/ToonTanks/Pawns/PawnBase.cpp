@@ -1,14 +1,17 @@
 // Copyright of Jorge Luque
 
 #include "PawnBase.h"
+
+#include "ToonTanks/Actors/ProjectileBase.h"
+#include "ToonTanks/Components/HealthComponent.h"
+
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "ToonTanks/Actors/ProjectileBase.h"
+#include "Kismet/GameplayStatics.h"
 
-// Sets default values
 APawnBase::APawnBase()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
@@ -16,28 +19,27 @@ APawnBase::APawnBase()
 
 	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
 	BaseMesh->SetupAttachment(RootComponent);
-	
+
 	TurretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
 	TurretMesh->SetupAttachment(BaseMesh);
 
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(TurretMesh); 
+	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 }
 
 void APawnBase::RotateTurret(FVector LocationToLookAt)
 {
-
 	FVector LookAtTargetCleaned = FVector(
 		LocationToLookAt.X, LocationToLookAt.Y, TurretMesh->GetComponentLocation().Z);
 	FVector StartLocation = TurretMesh->GetComponentLocation();
-	
+
 	FRotator TurretRotation = FVector(LookAtTargetCleaned - StartLocation).Rotation();
 	TurretMesh->SetWorldRotation(TurretRotation);
-	
+
 	// Update TurretMesh rotation to face towards the LookAtTarget passed in from Child classes
 	// TurretMesh->SetWorldRotation()
-
-	
 }
 
 void APawnBase::Fire()
@@ -47,7 +49,7 @@ void APawnBase::Fire()
 	// #ToDoJ: The rotation we need is probably not the local rotation since that one will be 0 since the
 	// ProjectileSpawnPoint is attached to the TurretMesh. We need the world rotation.
 
-	if(ProjectileClass)
+	if (ProjectileClass)
 	{
 		FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 		FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
@@ -56,7 +58,7 @@ void APawnBase::Fire()
 
 		TempProjectile->SetOwner(this);
 	}
-	
+
 	UE_LOG(LogTemp, Warning, TEXT("Fire Condition Success"))
 }
 
@@ -64,6 +66,7 @@ void APawnBase::HandleDestruction()
 {
 	// == Universal Functionality (stuff to call using Super::) ==
 	// Play death effects particle, sound, and camera shake.
+	UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticle, GetActorLocation());
 
 	// == Child-specific functionality ==
 	// - PawnTurret: Inform GameMode that the Turret died. Then Destroy() self.
@@ -74,4 +77,3 @@ void APawnBase::HandleDestruction()
 	// #ToDoJ: The GameMode will be tracking how many turrets there are when a turret pawn is destroyed,
 	// This could also be tracked on the GameState.
 }
-

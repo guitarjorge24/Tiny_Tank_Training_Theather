@@ -33,15 +33,16 @@ private:
 	TSubclassOf<UDamageType> DamageType;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage", meta = (AllowPrivateAccess = "true"))
 	float Damage = 50;
-
+	UPROPERTY(EditAnywhere, Category="Effects")
+	UParticleSystem* HitParticle;
+	
 	/**
- 	* @brief 
+ 	* @brief Bound to the OnComponentHit event. Applies projectile damage and destroys projectile upon hit.
  	* @param HitComponent The component hit by the OtherActor (e.g. this actor's mesh component)
  	* @param OtherActor The other actor that is hit.
  	* @param OtherComp The specific component inside the OtherActor that is hit e.g. a specific mesh.
  	* @param NormalImpulse The total impulse applied as the two objects push against each other
  	* @param Hit
- 	* @return 
  	*/
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
