@@ -41,6 +41,8 @@ private:
 	USoundBase* HitSound;
 	UPROPERTY(EditAnywhere, Category="Effects")
 	USoundBase* LaunchSound;
+	UPROPERTY(EditAnywhere, Category="Effects")	
+	TSubclassOf<UMatineeCameraShake> HitShake;
 
 	/**
  	* @brief Bound to the OnComponentHit event. Applies projectile damage and destroys projectile upon hit.

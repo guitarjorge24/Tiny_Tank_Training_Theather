@@ -46,6 +46,7 @@ void AProjectileBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 			this, DamageType);
 		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticle, GetActorLocation());
 		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitShake);
 		Destroy(); // only destroy if it hits something that isn't the owner or itself.
 	}
 }
