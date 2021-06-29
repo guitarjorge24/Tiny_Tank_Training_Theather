@@ -38,6 +38,7 @@ protected:
 	void GameOver_BP(bool PlayerWon);
 
 private:
+	class APlayerControllerBase* PlayerControllerRef;
 	class APawnTank* PlayerTank;
 	/**
 	* @brief The number of remaining enemy turrets in the level. 
