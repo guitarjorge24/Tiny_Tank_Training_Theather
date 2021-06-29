@@ -57,6 +57,7 @@ void APawnBase::Fire()
 			ProjectileClass, SpawnLocation, SpawnRotation);
 
 		TempProjectile->SetOwner(this);
+		TempProjectile->ProjectileMesh->IgnoreActorWhenMoving(this, true);
 	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Fire Condition Success"))
