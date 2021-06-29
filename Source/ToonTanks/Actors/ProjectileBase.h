@@ -27,17 +27,21 @@ private:
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UParticleSystemComponent* ParticleTrail;
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 1300.f;
 	UPROPERTY(EditDefaultsOnly, Category = "Damage")
 	TSubclassOf<UDamageType> DamageType;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Damage", meta = (AllowPrivateAccess = "true"))
 	float Damage = 50;
-	
+
 	UPROPERTY(EditAnywhere, Category="Effects")
 	UParticleSystem* HitParticle;
-	
+	UPROPERTY(EditAnywhere, Category="Effects")
+	USoundBase* HitSound;
+	UPROPERTY(EditAnywhere, Category="Effects")
+	USoundBase* LaunchSound;
+
 	/**
  	* @brief Bound to the OnComponentHit event. Applies projectile damage and destroys projectile upon hit.
  	* @param HitComponent The component hit by the OtherActor (e.g. this actor's mesh component)
@@ -47,8 +51,6 @@ private:
  	* @param Hit
  	*/
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
-
-	 
-
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	           FVector NormalImpulse, const FHitResult& Hit);
 };
