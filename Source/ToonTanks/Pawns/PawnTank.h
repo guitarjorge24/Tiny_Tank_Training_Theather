@@ -14,17 +14,13 @@ class TOONTANKS_API APawnTank : public APawnBase
 
 public:
 	APawnTank();
-
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
+	bool GetIsPlayerAlive() const;
 	virtual void HandleDestruction() override;
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
@@ -32,31 +28,36 @@ private:
 	class USpringArmComponent* SpringArmComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta=(AllowPrivateAccess = "true"))
 	class UCameraComponent* CameraComponent;
+	UPROPERTY()
+	APlayerController* PlayerController;
 
+	bool bIsPlayerAlive = true;
+	
+	/** @brief How many units to move forward/backward in 1 second with a fully activated input axis */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tank Movement", meta=(AllowPrivateAccess = "true"))
 	float MoveSpeed = 100.f;
+	/** @brief How many degrees to rotate clockwise/anti-clockwise in 1 second with a fully activated "Turn" input axis */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tank Movement", meta=(AllowPrivateAccess = "true"))
 	float RotateSpeed = 100.f;
-
-	APlayerController* PlayerController;
-	
+	/** @brief How much to move the tank forward/backwards on a single game frame */
 	FVector TranslationAmountPerFrame;
-	FQuat RotationDirection;
+	/** @brief How much to rotate tank by in quaternions on a single game frame (when pressing A or D) */
+	FQuat RotateAmountPerFrameinQuat;
 
+
+	
 	/**
-	* @brief 
+	* @brief Calculate the value of TranslationAmountPerFrame
 	* @param Value Input Axis Value
 	*/
 	void CalculateMoveInput(float Value);
 	/**
- 	* @brief 
+ 	* @brief Calculate value of RotateAmountPerFrameinQuat
  	* @param Value Input Axis Value
  	*/
 	void CalculateRotateInput(float Value);
-
-	/**
-	* @brief Adds a change in the location of an actor along it's local axis.  
-	*/
+	/** @brief Called in Tick. Calls AddActorLocalOffset to add change in actor location along it's local axis.	*/
 	void Move();
+	/** @brief Called in Tick. Calls AddActorLocalRotation to add change in actor local rotation axes. */
 	void Rotate();
 };

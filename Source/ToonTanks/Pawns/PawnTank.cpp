@@ -46,7 +46,11 @@ void APawnTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APawnTank::Fire);
 }
 
-// Called when the game starts or when spawned
+bool APawnTank::GetIsPlayerAlive() const
+{
+	return bIsPlayerAlive;
+}
+
 void APawnTank::BeginPlay()
 {
 	Super::BeginPlay();
@@ -56,7 +60,10 @@ void APawnTank::BeginPlay()
 void APawnTank::HandleDestruction()
 {
 	Super::HandleDestruction();
-	// call Hide Player function
+	bIsPlayerAlive = false;
+
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false); // stops movement and rotation logic that gets run on Tick()
 }
 
 void APawnTank::CalculateMoveInput(float Value)
@@ -68,7 +75,7 @@ void APawnTank::CalculateRotateInput(float Value)
 {
 	float RotateAmountPerFrame = Value * RotateSpeed * GetWorld()->DeltaTimeSeconds;
 	FRotator Rotation = FRotator(0, RotateAmountPerFrame, 0);
-	RotationDirection = FQuat(Rotation);
+	RotateAmountPerFrameinQuat = FQuat(Rotation);
 }
 
 void APawnTank::Move()
@@ -78,5 +85,5 @@ void APawnTank::Move()
 
 void APawnTank::Rotate()
 {
-	AddActorLocalRotation(RotationDirection, true);
+	AddActorLocalRotation(RotateAmountPerFrameinQuat, true);
 }
