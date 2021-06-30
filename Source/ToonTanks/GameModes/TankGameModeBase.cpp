@@ -36,6 +36,7 @@ void ATankGameModeBase::ActorDied(AActor* DeadActor)
 		{
 			GameOver_CPP(true);
 		}
+		UpdateEnemyCountUI_BP(EnemyTurretsCount);
 	}
 }
 
@@ -52,8 +53,10 @@ void ATankGameModeBase::GameStart_CPP()
 	EnemyTurretsCount = GetEnemyTurretsCount();
 	PlayerTank = Cast<APawnTank>(UGameplayStatics::GetPlayerPawn(this, 0));
 	PlayerControllerRef = Cast<APlayerControllerBase>(UGameplayStatics::GetPlayerController(this, 0));
-	
+
 	GameStart_BP();
+	UpdateEnemyCountUI_BP(EnemyTurretsCount);
+
 	// disable input until the countdown timer ends.
 	if(PlayerControllerRef)
 	{

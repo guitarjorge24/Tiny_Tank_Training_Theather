@@ -36,6 +36,8 @@ protected:
 	void GameStart_BP();
 	UFUNCTION(BlueprintImplementableEvent)
 	void GameOver_BP(bool PlayerWon);
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateEnemyCountUI_BP(int32 EnemiesLeft);
 
 private:
 	class APlayerControllerBase* PlayerControllerRef;

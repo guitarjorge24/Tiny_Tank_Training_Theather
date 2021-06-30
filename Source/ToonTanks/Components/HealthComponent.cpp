@@ -1,9 +1,7 @@
 // Copyright of Jorge Luque
 
-#include "ToonTanks/GameModes/TankGameModeBase.h"
-
 #include "HealthComponent.h"
-
+#include "ToonTanks/GameModes/TankGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
