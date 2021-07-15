@@ -1,4 +1,4 @@
-# Tiny_Tank_Training_Theather
+# Tiny Tanks Training Theather (TTTT)
 A 3D 3rd-person tank training game where you must destroy enemy turrets.
 
 I think a lot of people like me who grew up playing videogames frrom the 80s and 90s will remember some classic old school top-down tank games like Battle City (NES) and WDL: Thunder Tanks (GBC) to have been at the root of many fond childhood memories.
